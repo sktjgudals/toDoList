@@ -28,7 +28,8 @@ export const updateApi = async (
 
 export const isDoneUpdateApi = async (
   id: number,
-  isDone: boolean
+  isDone: boolean,
+  description: string
 ): Promise<boolean> => {
   try {
     const url = `http://localhost:3001/posts/${id}`;
@@ -37,11 +38,12 @@ export const isDoneUpdateApi = async (
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ isDone }),
+      body: JSON.stringify({ isDone, description }),
     };
 
-    const a = await fetch(url, urlOptions);
-    console.log(a);
+    await fetch(url, urlOptions).catch((e) => {
+      if (e) return "error";
+    });
   } catch (e) {
     if (e) return false;
   }

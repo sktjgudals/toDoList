@@ -22,7 +22,7 @@ const List: React.FC<Props> = ({ inputCheck }) => {
     data.statusCode === 404
       ? []
       : data.filter((todo: ToDo) => todo.isDone === false);
-  const [toDo, setToDo] = useState<string>("");
+  const [toDoDesc, setToDoDesc] = useState<string>("");
   const [toDos, setToDos] = useState<ToDo[]>(
     notIsDoneToDo ? notIsDoneToDo : []
   );
@@ -37,12 +37,14 @@ const List: React.FC<Props> = ({ inputCheck }) => {
       add.isDone = true;
       toDos.splice(index, 1);
       completedToDos.splice(index, 0, add);
+      isDoneUpdateApi(id, !isDone, add.description);
     } else {
       const index = completedToDos.findIndex((toDo) => toDo.id === id);
       let add = completedToDos[index];
       add.isDone = false;
       completedToDos.splice(index, 1);
       toDos.splice(index, 0, add);
+      isDoneUpdateApi(id, !isDone, add.description);
     }
     setCompletedToDos((prev) => {
       return [...completedToDos];
@@ -50,18 +52,17 @@ const List: React.FC<Props> = ({ inputCheck }) => {
     setToDos(() => {
       return [...toDos];
     });
-    isDoneUpdateApi(id, !isDone);
   };
 
   const handleAdd = async (e: React.FormEvent) => {
     const isDone = false;
     e.preventDefault();
 
-    if (toDo) {
-      const res = await addApi(toDo, isDone);
+    if (toDoDesc) {
+      const res = await addApi(toDoDesc, isDone);
       if (res !== -1) {
-        setToDos([...toDos, { id: res, description: toDo, isDone }]);
-        setToDo("");
+        setToDos([...toDos, { id: res, description: toDoDesc, isDone }]);
+        setToDoDesc("");
       } else {
         return console.warn("api 보내기 실패");
       }
@@ -85,14 +86,14 @@ const List: React.FC<Props> = ({ inputCheck }) => {
           add = active[source.index];
           add.isDone = true;
           if (destination.droppableId !== source.droppableId) {
-            isDoneUpdateApi(add.id, add.isDone);
+            isDoneUpdateApi(add.id, add.isDone, add.description);
           }
           active.splice(source.index, 1);
         } else {
           add = complete[source.index];
           add.isDone = false;
           if (destination.droppableId !== source.droppableId) {
-            isDoneUpdateApi(add.id, add.isDone);
+            isDoneUpdateApi(add.id, add.isDone, add.description);
           }
           complete.splice(source.index, 1);
         }
@@ -123,7 +124,11 @@ const List: React.FC<Props> = ({ inputCheck }) => {
         </>
       ) : (
         <>
-          <InputFeild toDo={toDo} setToDo={setToDo} handleAdd={handleAdd} />
+          <InputFeild
+            toDo={toDoDesc}
+            setToDo={setToDoDesc}
+            handleAdd={handleAdd}
+          />
           <DragDropContext onDragEnd={onDragEnd}>
             <ToDoList
               toDos={toDos}

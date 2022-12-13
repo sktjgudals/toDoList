@@ -1,21 +1,5 @@
 {
-  "posts": [
-    {
-      "description": "test2123123123123qwe",
-      "isDone": false,
-      "id": 2
-    },
-    {
-      "description": "qweqwe",
-      "isDone": true,
-      "id": 3
-    },
-    {
-      "description": "123",
-      "isDone": false,
-      "id": 4
-    }
-  ],
+  "posts": [],
   "comments": [],
   "profile": {
     "name": "typicode"
