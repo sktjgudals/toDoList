@@ -3,7 +3,7 @@ export const addApi = async (
   isDone: boolean
 ): Promise<number> => {
   try {
-    const url = `http://localhost:4000/to-do/`;
+    const url = `http://localhost:3001/posts`;
     const urlOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },

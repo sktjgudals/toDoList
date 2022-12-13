@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ToDo } from "../model";
-import "./style.css";
+// import "./style.css";
 import InputFeild from "./InputFeild";
 import ToDoList from "./ToDoList";
 import { addApi } from "../api/add";
@@ -9,13 +9,11 @@ import { isDoneUpdateApi } from "../api/update";
 import { useFetchAsync } from "../api/get";
 
 interface Props {
-  url: string;
   inputCheck?: boolean;
 }
 
-const List: React.FC<Props> = ({ url, inputCheck }) => {
-  console.log("heloo");
-  const data = useFetchAsync(url);
+const List: React.FC<Props> = ({ inputCheck }) => {
+  const data = useFetchAsync("http://localhost:3001/posts");
   const isDoneToDo =
     data.statusCode === 404
       ? []

@@ -2,18 +2,24 @@ export const updateApi = async (
   id: number,
   toDo: string,
   isDone: boolean
-): Promise<number> => {
+): Promise<any> => {
   try {
-    const url = `http://localhost:4000/to-do/${id}`;
+    const url = `http://localhost:3001/posts/${id}`;
     const urlOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ description: toDo, isDone }),
     };
-    const res = await fetch(url, urlOptions);
-    const result = await res.json();
-    if (result) return result.id;
-    else return 0;
+    return await new Promise((resolve, reject) => {
+      fetch(url, urlOptions)
+        .then(async (data: any) => {
+          const res = await data.json();
+          resolve(res.id);
+        })
+        .catch((e) => {
+          if (e) return reject(e);
+        });
+    });
   } catch (e) {
     if (e) return 0;
   }
@@ -25,15 +31,17 @@ export const isDoneUpdateApi = async (
   isDone: boolean
 ): Promise<boolean> => {
   try {
-    const url = `http://localhost:4000/to-do/isdone/`;
+    const url = `http://localhost:3001/posts/${id}`;
     const urlOptions = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id, isDone }),
+      body: JSON.stringify({ isDone }),
     };
-    fetch(url, urlOptions);
+
+    const a = await fetch(url, urlOptions);
+    console.log(a);
   } catch (e) {
     if (e) return false;
   }

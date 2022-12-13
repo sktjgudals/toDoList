@@ -1,6 +1,6 @@
 export const deleteApi = async (id: number): Promise<boolean> => {
   try {
-    const url = `http://localhost:4000/to-do/${id}`;
+    const url = `http://localhost:3001/posts/${id}`;
 
     const urlOptions = {
       method: "DELETE",

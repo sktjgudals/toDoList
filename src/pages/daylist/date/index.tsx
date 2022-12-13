@@ -8,7 +8,7 @@ import List from "../../../components/List";
 
 const Date: React.FC = () => {
   const location = useLocation().pathname.split("daylist/")[1];
-  const url = `http://localhost:4000/to-do/${location}`;
+  const url = `http://localhost:3001/posts/${location}`;
   const today = moment().format();
   let inputCheck = true;
   if (today.split("T")[0] === location.split("T")[0]) {
@@ -23,7 +23,7 @@ const Date: React.FC = () => {
       <Link to="/daylist" className="icon_heading">
         <FiAlignLeft />
       </Link>
-      <List url={url} inputCheck={inputCheck} />
+      <List inputCheck={inputCheck} />
     </>
   );
 };

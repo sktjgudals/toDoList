@@ -6,14 +6,13 @@ import List from "./List";
 import Header from "./Header";
 
 const Home: React.FC = () => {
-  const url = `http://localhost:4000/to-do/`;
   return (
     <>
       <Header path={"/"} title={`All ToDoList`} />
       <Link to="/daylist" className="icon_heading">
         <FiAlignLeft />
       </Link>
-      <List url={url} />
+      <List />
     </>
   );
 };
